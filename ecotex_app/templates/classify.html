@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Classify · EcoTex Sorter{% endblock %}
+{% block content %}
+<h1>Classify a fabric</h1>
+{% if demo %}<div class="banner">Demo mode: no trained model found, so results are placeholders. Add <code>model/ecotex_model.keras</code> for real predictions.</div>{% endif %}
+
+<div class="grid two">
+  <section class="card">
+    <div id="drop" class="drop">
+      <img id="preview" alt="Selected fabric preview" hidden>
+      <video id="video" autoplay playsinline muted hidden></video>
+      <p id="hint">Drop an image here, or choose one below.<br><small>Tip: take a close-up so the fabric fills the frame.</small></p>
+    </div>
+    <div class="row">
+      <label class="btn alt">Upload image<input id="file" type="file" accept="image/*" hidden></label>
+      <label class="btn alt">Take photo<input id="snap" type="file" accept="image/*" capture="environment" hidden></label>
+      <button id="live" class="btn alt" type="button">Live camera</button>
+      <button id="shot" class="btn alt" type="button" hidden>Capture</button>
+    </div>
+    <button id="go" class="btn wide" disabled>Classify</button>
+    <canvas id="canvas" hidden></canvas>
+  </section>
+
+  <section class="card" id="out" aria-live="polite">
+    <div id="empty" class="muted">Your result will appear here.</div>
+    <div id="busy" hidden><div class="spin"></div><p>Analyzing…</p></div>
+    <div id="err" class="error" hidden></div>
+    <div id="res" hidden>
+      <div class="muted">Predicted fabric</div>
+      <h2 id="label"></h2>
+      <div id="warn" class="banner" hidden>Low confidence. Please retake a close-up photo in good light.</div>
+      <div id="bars"></div>
+      <p id="tip" class="tip"></p>
+      <button id="save" class="btn alt" type="button">Download result</button>
+    </div>
+  </section>
+</div>
+{% endblock %}

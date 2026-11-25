@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}About · EcoTex Sorter{% endblock %}
+{% block content %}
+<h1>About the project</h1>
+<p class="lead">Textile waste is still sorted by hand, which is slow and error-prone. EcoTex Sorter is an AI-based system that classifies fabric images so recycling can start from the right material.</p>
+
+<h2>Fabric categories</h2>
+<div class="grid three">
+  {% for c in classes %}<div class="card"><h3>{{ c|capitalize }}</h3><p>{{ info[c] }}</p></div>{% endfor %}
+</div>
+
+<h2>How it works</h2>
+<p>The image is resized to 224×224 and passed to a MobileNetV2 model (transfer learning, TensorFlow/Keras). The model returns a probability for each fabric, and the web app (Flask) shows the top three with a recycling tip.</p>
+
+<h2>Limitations</h2>
+<ul>
+  <li>Works best on <b>close-up, well-lit</b> photos of a single fabric.</li>
+  <li><b>Blended fabrics</b> (for example cotton-polyester) are not supported yet.</li>
+  <li>Identifying material from an image alone is hard, so low-confidence results ask you to retake the photo.</li>
+</ul>
+
+<h2>Project</h2>
+<p>Final Year Project, University of Karachi (Sheikh Zayed Islamic Centre). Supervised by Ma'am Sana.</p>
+{% endblock %}

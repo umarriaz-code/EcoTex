@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+  <div>
+    <h1>Know your fabric before it goes to waste</h1>
+    <p>Photograph a piece of textile and EcoTex Sorter tells you what it is made of and how to recycle it.</p>
+    <div class="row"><a class="btn" href="{{ url_for('classify') }}">Classify a fabric</a><a class="btn ghost" href="{{ url_for('about') }}">How it works</a></div>
+  </div>
+  <div class="swatch" aria-hidden="true">
+    <div class="mock"><small>Predicted fabric</small><br><b>Cotton, 87%</b><div class="track"><div class="fill"></div></div></div>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat"><b>{{ stats.classes }}</b><span>fabric types recognised</span></div>
+  <div class="stat"><b>{{ stats.images }}</b><span>training images</span></div>
+  <div class="stat"><b>{{ stats.accuracy }}</b><span>accuracy on held-out test images</span></div>
+  <div class="stat"><b>{{ stats.realworld }}</b><span>accuracy on close-up phone photos</span></div>
+</section>
+<p class="note">Both accuracies are measured on images the model never saw: catalogue photos, and close-up photos taken for this project.</p>
+
+<section class="split">
+  <div>
+    <h2>From photo to recycling tip</h2>
+    <ol class="steps">
+      <li><div><b>Add a photo</b><span>Upload an image or use your camera. Fill the frame with the fabric.</span></div></li>
+      <li><div><b>The model analyses the texture</b><span>A MobileNetV2 network compares it with the {{ classes|length }} fabrics it knows.</span></div></li>
+      <li><div><b>Read the result</b><span>You get the top three matches with confidence, and a recycling tip.</span></div></li>
+    </ol>
+  </div>
+  <div class="dist">
+    <h2>What the model learned from</h2>
+    {% for name, n in dist.items() %}<div class="r"><span>{{ name }}</span><div class="t"><i style="width:{{ (n / (dist.values()|max) * 100)|round }}%"></i></div><span>{{ n }}</span></div>{% endfor %}
+    <p class="note">Training images per fabric.</p>
+  </div>
+</section>
+
+<section class="cta"><h2>Try it with a fabric you have at home</h2><a class="btn" href="{{ url_for('classify') }}">Open the classifier</a></section>
+{% endblock %}

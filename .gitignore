@@ -1,0 +1,25 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment variables and secrets
+.env
+.env.*
+
+# Generated output (review before committing)
+output/
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
